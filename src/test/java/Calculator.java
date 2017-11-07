@@ -1,7 +1,11 @@
+import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+import java.io.File;
 
 public class Calculator {
 
@@ -9,13 +13,14 @@ public class Calculator {
 
     @BeforeClass
     public static void start() {
+        ChromeDriverManager.getInstance().setup();
+        //ChromeOptions opt = new ChromeOptions().setHeadless(true);
         driver = new ChromeDriver();
-        driver.get("file:///C:/Users/User/Desktop/GL%20Base%20Camp/7.%20Test%20Automation/SeleniumWebdriver/calc.html");
     }
 
     @Before
     public void clean(){
-        driver.findElement(By.xpath("//input[@value='C']")).click();
+        driver.get("file:///" + getAppPath());
     }
 
     @Test
@@ -66,4 +71,9 @@ public class Calculator {
     public static void stop() {
         driver.quit();
     }
-}
+
+    private final String getAppPath()
+    {
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource("calc.html").getFile());
+        return  file.getAbsolutePath();}}
