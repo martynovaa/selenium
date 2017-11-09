@@ -1,3 +1,5 @@
+package tests;
+
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.junit.*;
 import org.openqa.selenium.By;
@@ -19,8 +21,11 @@ public class Calculator {
     }
 
     @Before
-    public void clean(){
-        driver.get("file:///" + getAppPath());
+     public void clean(){
+        ClassLoader classLoader = getClass().getClassLoader();
+        File file = new File(classLoader.getResource("calc.html").getFile());
+        driver.get("file:///"+file.getAbsolutePath());
+        driver.findElement(By.xpath("//input[@value='C']")).click();
     }
 
     @Test
@@ -72,8 +77,9 @@ public class Calculator {
         driver.quit();
     }
 
+
     private final String getAppPath()
     {
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("calc.html").getFile());
-        return  file.getAbsolutePath();}}
+       return  file.getAbsolutePath();}}
