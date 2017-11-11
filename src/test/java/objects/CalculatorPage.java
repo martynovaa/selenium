@@ -7,11 +7,11 @@ import java.io.File;
 
 public class CalculatorPage {
     WebDriver driver;
-    String button = "//input[@value='%s']";
+    String button = "//[@name='%s']";
 
     By resultBox = By.cssSelector("#resultsbox");
-    By equal = By.xpath("//input[@value='=']");
-    By clean = By.xpath("//input[@value='C']");
+    By equal = By.xpath("//[@name='=']");
+    By clean = By.xpath("//[@name='Clear']");
 
     public CalculatorPage(WebDriver driver) {
         this.driver = driver;
